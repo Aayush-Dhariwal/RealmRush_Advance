@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: 2747971867873179234, guid: d192c00734bcf004491d303732b4e28f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2747971867873179234, guid: d192c00734bcf004491d303732b4e28f,
         type: 3}
@@ -35,17 +35,17 @@ PrefabInstance:
     - target: {fileID: 2747971867873179234, guid: d192c00734bcf004491d303732b4e28f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2747971867873179234, guid: d192c00734bcf004491d303732b4e28f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2747971867873179234, guid: d192c00734bcf004491d303732b4e28f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2747971867873179234, guid: d192c00734bcf004491d303732b4e28f,
         type: 3}
@@ -65,7 +65,7 @@ PrefabInstance:
     - target: {fileID: 2747971867873179235, guid: d192c00734bcf004491d303732b4e28f,
         type: 3}
       propertyPath: m_Name
-      value: Tile_RoadStraight90
+      value: (1, 0)
       objectReference: {fileID: 0}
     - target: {fileID: 7117660131986397553, guid: d192c00734bcf004491d303732b4e28f,
         type: 3}
@@ -91,6 +91,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7532197436448791405, guid: d192c00734bcf004491d303732b4e28f,
+        type: 3}
+      propertyPath: m_text
+      value: 1, 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d192c00734bcf004491d303732b4e28f, type: 3}
