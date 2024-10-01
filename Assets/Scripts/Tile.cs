@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Waypoint : MonoBehaviour
+public class Tile : MonoBehaviour
 {
     [SerializeField] Tower towerPrefab;         // Instead of GameObject we are using Tower to get reference to our Tower script from Waypoint
 
