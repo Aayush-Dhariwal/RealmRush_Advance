@@ -95,6 +95,7 @@ public class Pathfinder : MonoBehaviour
             currentNode = currentNode.connectedTo;      //Will take us one step (node) back down our path
             path.Add(currentNode);
             currentNode.isPath = true;
+            //Debug.Log("path build");
         }
 
         path.Reverse();              //To reverse the backtracked path

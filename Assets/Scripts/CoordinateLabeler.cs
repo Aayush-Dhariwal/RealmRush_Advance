@@ -62,14 +62,17 @@ public class CoordinateLabeler : MonoBehaviour
         if(!node.isWalkable)
         {
             label.color = blockedColor;
+            //Debug.Log("Grey colored blocked");
         }
         else if(node.isPath)
         {
             label.color = pathColor;
+            //Debug.Log("Orange Colored Path");
         }
         else if(node.isExplored)
         {
             label.color = exploredColor;
+            //Debug.Log("yellow is explored");
         }
         else
         {
@@ -79,8 +82,10 @@ public class CoordinateLabeler : MonoBehaviour
 
     void DisplayCoordinates()    // To display coordinates as Text on the tiles
     {
-        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / UnityEditor.EditorSnapSettings.move.x);  // to get coordinates of the parent / increment snap value
-        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / UnityEditor.EditorSnapSettings.move.z);
+        if(gridManager == null) { return; }         //Exiting early if gridManager is null
+
+        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / gridManager.UnityGridSize);  //coordinates of the parent divided by increment snap value
+        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / gridManager.UnityGridSize);
 
         label.text = coordinates.x + ", " + coordinates.y;
     }

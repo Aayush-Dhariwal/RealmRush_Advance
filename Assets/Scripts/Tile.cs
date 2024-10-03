@@ -14,6 +14,27 @@ public class Tile : MonoBehaviour
     //    return isPlaceable;
     //}
 
+    GridManager gridManager;
+    Vector2Int coordinates = new Vector2Int();
+
+    private void Awake()
+    {
+        gridManager = FindObjectOfType<GridManager>();
+    }
+
+    private void Start()
+    {
+        if (gridManager != null)        //The rest of the code can continue executing after this block, even if gridManager was null. Use this when we don't want an early exit 
+        {
+            coordinates = gridManager.GetCoordinatesFromPosition(transform.position);
+
+            if(!isPlaceable)
+            {
+                gridManager.BlockNode(coordinates);
+            }
+        }          
+    }
+
     private void OnMouseDown()
     {
         if (isPlaceable)
