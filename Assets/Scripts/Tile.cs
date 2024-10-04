@@ -15,11 +15,13 @@ public class Tile : MonoBehaviour
     //}
 
     GridManager gridManager;
+    Pathfinder pathfinder;
     Vector2Int coordinates = new Vector2Int();
 
     private void Awake()
     {
         gridManager = FindObjectOfType<GridManager>();
+        pathfinder = FindObjectOfType<Pathfinder>();
     }
 
     private void Start()
@@ -37,11 +39,13 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (isPlaceable)
+        if (gridManager.GetNode(coordinates).isWalkable && !pathfinder.WillBlockPath(coordinates))
         {
             bool isPlaced = towerPrefab.CreateTower(towerPrefab, transform.position);                //Returns true if we have managed to place a tower or 
                                                                                                      //Return false if we didn't have enough money in bank 
-            isPlaceable = !isPlaced;                                                              
+            //Debug.Log("Tower Placed");
+            isPlaceable = !isPlaced; 
+            gridManager.BlockNode(coordinates);
         }
     }
 }
