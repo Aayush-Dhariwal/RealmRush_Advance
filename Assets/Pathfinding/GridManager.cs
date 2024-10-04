@@ -35,6 +35,16 @@ public class GridManager : MonoBehaviour     // store a reference to all the nod
         }
     }
 
+    public void ResetNode()     //To loop through all the nodes and set the connectedto to null, ispath and isexplored flag to false
+    {
+        foreach(KeyValuePair<Vector2Int, Node> entry in grid)
+        {
+            entry.Value.connectedTo = null;
+            entry.Value.isExplored = false;
+            entry.Value.isPath = false;
+        }
+    }
+
     public Vector2Int GetCoordinatesFromPosition(Vector3 position)
     {
         Vector2Int coordinates = new Vector2Int();
