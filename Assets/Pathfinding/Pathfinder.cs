@@ -33,9 +33,14 @@ public class Pathfinder : MonoBehaviour
         startNode = gridManager.Grid[startCoordinates];
         destinationNode = gridManager.Grid[destinationCoordinates];
 
+        GetNewPath();
+    }
+
+    public List<Node> GetNewPath()
+    {
+        gridManager.ResetNode();
         BreadthFirstSearch();
-        //StartCoroutine(BreadthFirstSearch());           // To see the BreadthFirstSearch happening slowly
-        BuildPath();
+        return BuildPath();
     }
 
     private void ExploreNeighbors()                  // Explore the directions(above vector) and if the grid contains the neighbor coordinates then add it to the list
@@ -65,6 +70,9 @@ public class Pathfinder : MonoBehaviour
 
     void BreadthFirstSearch()
     {
+        frontier.Clear();     //To clear the queue and dictionary for us to start pathfinding for a second time
+        reached.Clear();
+
         bool isRunning = true;     // To help us break out of while loop
 
         frontier.Enqueue(startNode);   // Enqueue adds to the end of the Queue  (here queue is empty so startNode will be the first element)
@@ -101,5 +109,25 @@ public class Pathfinder : MonoBehaviour
         path.Reverse();              //To reverse the backtracked path
 
         return path;
+    }
+
+    public bool WillBlockPath(Vector2Int coordinates)       //To check if a tower placed will block the path to destination or not and then create a new path accordingly
+    {
+        if (grid.ContainsKey(coordinates))
+        {
+            bool previousState = grid[coordinates].isWalkable;
+
+            grid[coordinates].isWalkable = false;       //Temporarily setting isWalkable to false at the specified node
+            List<Node> newPath = GetNewPath();
+            grid[coordinates].isWalkable = previousState;
+
+            if(newPath.Count <= 1)    // This means that tower is blocking the path as it was not able to find a new node so we create a new path
+            {
+                GetNewPath();
+                return true;
+            }
+        }
+
+        return false;
     }
 }
