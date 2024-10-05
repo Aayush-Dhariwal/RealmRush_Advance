@@ -40,8 +40,13 @@ public class Pathfinder : MonoBehaviour
 
     public List<Node> GetNewPath()
     {
+        return GetNewPath(startCoordinates);
+    }
+
+    public List<Node> GetNewPath(Vector2Int coordinates)    //Overload Method
+    {
         gridManager.ResetNode();
-        BreadthFirstSearch();
+        BreadthFirstSearch(coordinates);
         return BuildPath();
     }
 
@@ -70,7 +75,7 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    void BreadthFirstSearch()
+    void BreadthFirstSearch(Vector2Int coordinates)   // coordinates parameter is added so that BFS will start wherever we tell it to
     {
         startNode.isWalkable = true;         //To make sure they are walkable for pathfinding, but not isPlaceable for our Towers
         destinationNode.isWalkable = true;
@@ -80,8 +85,8 @@ public class Pathfinder : MonoBehaviour
 
         bool isRunning = true;     // To help us break out of while loop
 
-        frontier.Enqueue(startNode);   // Enqueue adds to the end of the Queue  (here queue is empty so startNode will be the first element)
-        reached.Add(startCoordinates, startNode);
+        frontier.Enqueue(grid[coordinates]);   // Enqueue adds to the end of the Queue  (here queue is empty so startNode will be the first element)
+        reached.Add(coordinates, grid[coordinates]);
 
         while ( frontier.Count > 0 && isRunning)         //isRunning helps to break out this while loop when we have found our destination but still we've got things to search
         {
@@ -138,7 +143,7 @@ public class Pathfinder : MonoBehaviour
 
     public void NotifyReceivers()      //To broadcast the message to every monobehaviour
     {
-        BroadcastMessage("RecalculatePath", SendMessageOptions.DontRequireReceiver);     //Will call the RecalculatePath to every MonoBehaviour in this
+        BroadcastMessage("RecalculatePath", false, SendMessageOptions.DontRequireReceiver);     //Will call the RecalculatePath to every MonoBehaviour in this
                                                                                          //gameobject (whichever gameobject this script is attached to)
                                                                                          //2nd parameter makes sure that no error will be returned if there is no receiver
     }

@@ -15,10 +15,9 @@ public class EnemyMover : MonoBehaviour
 
     void OnEnable()                 // Using OnEnable in place of Start as whenever enemy gets active ReturnToStart method will be called and object will be at startPosition(path[0])
     {
-        RecalculatePath();
         ReturnToStart();
-        StartCoroutine(FollowPath());  // Rather than using string reference like in Invoke method we can now use the proper method name
-        //InvokeRepeating("PrintWaypointName", 0, 1f);   //Does a similar job to coroutines but not doing what we want
+        RecalculatePath(true);
+        //StartCoroutine(FollowPath());  // Rather than using string reference like in Invoke method we can now use the proper method name
     }
 
     private void Awake()
@@ -28,10 +27,24 @@ public class EnemyMover : MonoBehaviour
         pathfinder = FindObjectOfType<Pathfinder>();
     }
 
-    void RecalculatePath()             //calculate or recalculate a path when a tower placed blocks the current path
+    void RecalculatePath(bool resetPath)             //calculate or recalculate a path when a tower placed blocks the current path
     {
+        Vector2Int coordinates = new Vector2Int();
+
+        if(resetPath )
+        {
+            coordinates = pathfinder.StartCoordinates;
+        }
+        else
+        {
+            coordinates = gridManager.GetCoordinatesFromPosition(transform.position);    //To get the current coordinates of the enemy
+        }
+
+        StopAllCoroutines(); //Stops the enemy from following the path while it finds a new one
         path.Clear();        //If there is already some path then it will clear before adding the below path
-        path = pathfinder.GetNewPath();
+        path = pathfinder.GetNewPath(coordinates);
+
+        StartCoroutine(FollowPath());      //Reason for keeping this in RecalculatePath method is because we also want to stop the routine before we get a new path
     }
 
     void ReturnToStart()                     // Make the enemy start from the startCoordinates
@@ -41,7 +54,7 @@ public class EnemyMover : MonoBehaviour
 
     IEnumerator FollowPath()               //For enemies to follow the calculated path
     {
-        for (int i = 0; i < path.Count; i++)
+        for (int i = 1; i < path.Count; i++)
         {
             Vector3 startPosition = transform.position;
             Vector3 endPosition = gridManager.GetPositionFromCoordinates(path[i].coordinates);
