@@ -6,7 +6,10 @@ using UnityEngine;
 public class Pathfinder : MonoBehaviour
 {
     [SerializeField] Vector2Int startCoordinates;
+    public Vector2Int StartCoordinates { get { return startCoordinates; } }
+
     [SerializeField] Vector2Int destinationCoordinates;
+    public Vector2Int DestinationCoordinates { get { return destinationCoordinates; } }
 
     Node startNode;
     Node destinationNode;
@@ -17,7 +20,7 @@ public class Pathfinder : MonoBehaviour
 
     Vector2Int[] directions = { Vector2Int.right, Vector2Int.left, Vector2Int.up, Vector2Int.down };   //Direction for search(neighbors),  basically 1 unit in each direction
     GridManager gridManager;
-    Dictionary<Vector2Int, Node> grid= new Dictionary<Vector2Int, Node>();
+    Dictionary<Vector2Int, Node> grid= new Dictionary<Vector2Int, Node>();      //To get reference to Grid in GridManager script
 
     private void Awake()
     {
@@ -25,14 +28,13 @@ public class Pathfinder : MonoBehaviour
         if (gridManager != null )
         {
             grid = gridManager.Grid;                //Accessing Grid (we have a public property for it) from GridManager script 
+            startNode = grid[startCoordinates];
+            destinationNode = grid[destinationCoordinates];
         }
     }
 
     void Start()
     {
-        startNode = gridManager.Grid[startCoordinates];
-        destinationNode = gridManager.Grid[destinationCoordinates];
-
         GetNewPath();
     }
 
@@ -70,6 +72,9 @@ public class Pathfinder : MonoBehaviour
 
     void BreadthFirstSearch()
     {
+        startNode.isWalkable = true;         //To make sure they are walkable for pathfinding, but not isPlaceable for our Towers
+        destinationNode.isWalkable = true;
+
         frontier.Clear();     //To clear the queue and dictionary for us to start pathfinding for a second time
         reached.Clear();
 
