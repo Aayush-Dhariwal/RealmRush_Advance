@@ -15,7 +15,7 @@ public class EnemyMover : MonoBehaviour
 
     void OnEnable()                 // Using OnEnable in place of Start as whenever enemy gets active ReturnToStart method will be called and object will be at startPosition(path[0])
     {
-        FindPath();
+        RecalculatePath();
         ReturnToStart();
         StartCoroutine(FollowPath());  // Rather than using string reference like in Invoke method we can now use the proper method name
         //InvokeRepeating("PrintWaypointName", 0, 1f);   //Does a similar job to coroutines but not doing what we want
@@ -28,7 +28,7 @@ public class EnemyMover : MonoBehaviour
         pathfinder = FindObjectOfType<Pathfinder>();
     }
 
-    void FindPath()
+    void RecalculatePath()             //calculate or recalculate a path when a tower placed blocks the current path
     {
         path.Clear();        //If there is already some path then it will clear before adding the below path
         path = pathfinder.GetNewPath();
@@ -39,7 +39,7 @@ public class EnemyMover : MonoBehaviour
         transform.position = gridManager.GetPositionFromCoordinates(pathfinder.StartCoordinates);
     }
 
-    IEnumerator FollowPath()
+    IEnumerator FollowPath()               //For enemies to follow the calculated path
     {
         for (int i = 0; i < path.Count; i++)
         {

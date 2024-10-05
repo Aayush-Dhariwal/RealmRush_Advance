@@ -135,4 +135,11 @@ public class Pathfinder : MonoBehaviour
 
         return false;
     }
+
+    public void NotifyReceivers()      //To broadcast the message to every monobehaviour
+    {
+        BroadcastMessage("RecalculatePath", SendMessageOptions.DontRequireReceiver);     //Will call the RecalculatePath to every MonoBehaviour in this
+                                                                                         //gameobject (whichever gameobject this script is attached to)
+                                                                                         //2nd parameter makes sure that no error will be returned if there is no receiver
+    }
 }

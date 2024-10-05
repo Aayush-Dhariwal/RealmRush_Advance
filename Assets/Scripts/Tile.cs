@@ -41,11 +41,14 @@ public class Tile : MonoBehaviour
     {
         if (gridManager.GetNode(coordinates).isWalkable && !pathfinder.WillBlockPath(coordinates))
         {
-            bool isPlaced = towerPrefab.CreateTower(towerPrefab, transform.position);                //Returns true if we have managed to place a tower or 
+            bool isSuccessful= towerPrefab.CreateTower(towerPrefab, transform.position);                //Returns true if we have managed to place a tower or 
                                                                                                      //Return false if we didn't have enough money in bank 
             //Debug.Log("Tower Placed");
-            isPlaceable = !isPlaced; 
-            gridManager.BlockNode(coordinates);
+            if (isSuccessful)                           
+            {
+                gridManager.BlockNode(coordinates);        //Block a node when a tower is placed there
+                pathfinder.NotifyReceivers();             //Tell pathfinder to notify its receivers that a tower has been placed (to recalculate the path) 
+            }
         }
     }
 }
