@@ -54,8 +54,9 @@ public class EnemyMover : MonoBehaviour
 
     IEnumerator FollowPath()               //For enemies to follow the calculated path
     {
-        for (int i = 1; i < path.Count; i++)
-        {
+        for (int i = 1; i < path.Count; i++)           //Starting from i = 1 ensures that the enemy starts moving to the next waypoint rather than to the position it's already at
+        {                                              //which was happening when we started from i = 0. This also fix the problem of our enemies sitting at the gatehouse when they
+                                                       //are first instantiated
             Vector3 startPosition = transform.position;
             Vector3 endPosition = gridManager.GetPositionFromCoordinates(path[i].coordinates);
             float travelPercent = 0f;
