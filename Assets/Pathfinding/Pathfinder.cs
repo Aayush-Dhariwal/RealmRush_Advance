@@ -79,6 +79,8 @@ public class Pathfinder : MonoBehaviour
     {
         startNode.isWalkable = true;         //To make sure they are walkable for pathfinding, but not isPlaceable for our Towers
         destinationNode.isWalkable = true;
+        //Debug.Log("Start Walkable");
+        //Debug.Log("Destination Walkable");
 
         frontier.Clear();     //To clear the queue and dictionary for us to start pathfinding for a second time
         reached.Clear();
@@ -98,6 +100,8 @@ public class Pathfinder : MonoBehaviour
                 isRunning = false;
             }
         }
+        startNode.isWalkable = false;                //Was a bug - set to false again so that we are not able to place tower at these nodes
+        destinationNode.isWalkable = false;
     }
 
     List<Node> BuildPath()                      //Look through the Tree from our destination node back to our starting node and build that path for us

@@ -33,8 +33,10 @@ public class Tile : MonoBehaviour
             if(!isPlaceable)
             {
                 gridManager.BlockNode(coordinates);
+                //Debug.Log("Start NotWalkable");
+                //Debug.Log("Destination NotWalkable");
             }
-        }          
+        }
     }
 
     private void OnMouseDown()
